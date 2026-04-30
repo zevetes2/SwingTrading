@@ -2,9 +2,10 @@ name: Actualización de Portafolio y Análisis Swing
 
 on:
   schedule:
-    # Se ejecuta todos los días a las 00:00 UTC
-    - cron: '0,30 13-20 * * 1-5'
-  workflow_dispatch: # Permite ejecutarlo manualmente desde la pestaña Actions
+    # Se ejecuta cada 30 min (minutos 0 y 30) de 13:00 a 20:00 UTC
+    # Esto equivale a 9:00 am - 4:00 pm en República Dominicana
+    - cron: '0,30 13-20 * * *'
+  workflow_dispatch: 
 
 jobs:
   build:
@@ -18,7 +19,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
+          # Se eliminó la línea de cache para evitar el error de requirements.txt
 
       - name: Instalar dependencias
         run: |
@@ -30,10 +31,10 @@ jobs:
           echo "${{ secrets.GCP_CREDENTIALS }}" > principios.json
 
       - name: Ejecutar análisis de Trading
-        run: python Swing Trading.py 
-        # Asegúrate de que el nombre coincida con tu archivo .py
+        # IMPORTANTE: Asegúrate de que el nombre del archivo sea exactamente "Swing Trading.py"
+        run: python "Swing Trading.py"
 
-      - name: Guardar Gráficas Generadas (Top Setups)
+      - name: Guardar Gráficas Generadas
         if: always()
         uses: actions/upload-artifact@v4
         with:
