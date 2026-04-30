@@ -28,7 +28,7 @@ jobs:
 
       - name: Crear archivo de credenciales
         run: |
-          echo "${{ secrets.GCP_CREDENTIALS }}" > principios.json
+          echo '${{ secrets.GCP_CREDENTIALS }}' > principios.json
 
       - name: Ejecutar análisis de Trading
         # IMPORTANTE: Asegúrate de que el nombre del archivo sea exactamente "Swing Trading.py"
